@@ -1,0 +1,67 @@
+﻿@model Note
+
+@{
+    var title = Model is null ? "Создание записи" : $"Информация о записи {Model.ID}";
+}
+
+<div class="container">
+    <form class="row mb-3" method="post" enctype="multipart/form-data">
+        <div class="form-group row">
+            <h2 class="text-info pl-3">@title</h2>
+        </div>
+        <div class="row">
+            <input asp-for=ID class="form-control" hidden/>
+        </div>
+        <div class="row">
+            <label for="lastName" class="form-label">Фамилия</label>
+            <input asp-for=LastName id="lastName" class="form-control" />
+        </div>
+        <div class="row">
+            <label for="firstName" class="form-label">Имя</label>
+            <input asp-for=FirstName id="firstName" class="form-control" />
+        </div>
+        <div class="row">
+            <label for="middleName" class="form-label">Отчество</label>
+            <input asp-for="MiddleName" id="middleName" class="form-control" />
+        </div>
+        <div class="row">
+            <label for="phone" class="form-label">Телефон</label>
+            <input asp-for=Phone id="phone" type="tel" class="form-control" />
+        </div>
+        <div class="row">
+            <label for="address" class="form-label">Адрес</label>
+            <input asp-for=Address id="address" class="form-control" />
+        </div>
+        <div class="row mb-3">
+            <label for="summernote" class="form-label">Описание</label>
+            <textarea asp-for="Description" id="summernote" class="form-control summernote"></textarea>
+        </div>
+        @if (Model is not null)
+        {
+            <div class="row">
+                <input type="submit" class="btn btn-primary w-50" value="Update" asp-action="Upsert"/>
+                <input type="submit" class="btn btn-danger w-50" asp-action="Delete" asp-route-id="@Model.ID" value="Delete" />
+            </div>  
+        }
+        else
+        {
+            <div class="row">
+                <input type="submit" class="btn btn-primary w-100" value="Create" />
+            </div>  
+        }
+    </form>
+</div>
+
+@*Валидация на стороне клиента*@
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
+        <script>
+          $('#summernote').summernote({
+            placeholder: 'Описание',
+            tabsize: 2,
+            height: 100
+          });
+        </script>
+    }

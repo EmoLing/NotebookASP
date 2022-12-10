@@ -1,10 +1,13 @@
 using NotebookASP.Data;
+using NotebookASP.Models;
+using NotebookASP.Models.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddEntityFrameworkSqlite().AddDbContext<NoteDbContext>();
+builder.Services.AddTransient<INoteRepository, NoteRepository>();
 
 var app = builder.Build();
 
